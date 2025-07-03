@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Localhost Request PoC</title>
+  <style>body{font-family:sans-serif;margin:2rem}</style>
+</head>
+<body>
+  <h1>Localhost Request PoC</h1>
+
+  <!-- Silent side-effect (no CORS bypass) -->
+  <img src="http://127.0.0.1:9000/img?ts=<?=Date.now()?>" style="display:none">
+
+  <button id="ping">POST /hello via fetch()</button>
+  <pre id="log"></pre>
+
+  <script>
+    const log = m => document.querySelector('#log').textContent += m + '\n';
+
+    document.getElementById('ping').onclick = async () => {
+      try {
+        const res = await fetch('http://127.0.0.1:9000/hello', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({t: Date.now()})
+        });
+        log(`Status ${res.status} — ${await res.text()}`);
+      } catch (e) {
+        log('Fetch failed: ' + e);
+      }
+    };
+  </script>
+</body>
+</html>
