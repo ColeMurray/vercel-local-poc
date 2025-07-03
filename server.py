@@ -25,8 +25,7 @@ def hello():
         r.headers.update({
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Private-Network": "true",
+            "Access-Control-Allow-Headers": "Content-Type"
         })
         return r
 
@@ -34,7 +33,6 @@ def hello():
     r = make_response({"msg": "hi from localhost"}, 200)
     r.headers.update({
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Private-Network": "true",
     })
     return r
 
